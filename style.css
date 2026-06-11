@@ -3370,3 +3370,176 @@ body.light .bars:hover{
     transform:translateX(125%) rotate(10deg);
   }
 }
+/* ======================================================
+   CONTACT ICON ONLY BUTTONS - V6 STYLE
+   Emoji text buttons replaced with clean SVG icons
+   ====================================================== */
+
+body .contact-icons{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:18px !important;
+  flex-wrap:wrap !important;
+  margin-top:30px !important;
+}
+
+body .contact-icon-link{
+  width:56px !important;
+  height:56px !important;
+  border-radius:50% !important;
+  display:grid !important;
+  place-items:center !important;
+  text-decoration:none !important;
+  position:relative !important;
+  overflow:hidden !important;
+
+  color:rgba(235,245,255,.78) !important;
+  background:rgba(255,255,255,.055) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 14px 42px rgba(0,0,0,.28) !important;
+
+  transition:
+    transform .28s cubic-bezier(.22,1,.36,1),
+    color .28s ease,
+    background .28s ease,
+    border-color .28s ease,
+    box-shadow .28s ease !important;
+}
+
+body .contact-icon-link svg{
+  width:22px !important;
+  height:22px !important;
+  position:relative !important;
+  z-index:2 !important;
+}
+
+/* small shine effect */
+body .contact-icon-link::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:-80% -60% !important;
+  background:linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,.40) 48%,
+    transparent 62%
+  ) !important;
+  transform:translateX(-120%) rotate(12deg) !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+}
+
+body .contact-icon-link:hover::after{
+  opacity:1 !important;
+  animation:contactIconShine .75s ease forwards !important;
+}
+
+@keyframes contactIconShine{
+  from{
+    transform:translateX(-120%) rotate(12deg);
+  }
+  to{
+    transform:translateX(120%) rotate(12deg);
+  }
+}
+
+/* Common hover */
+body .contact-icon-link:hover{
+  transform:translateY(-7px) scale(1.12) !important;
+  color:#061018 !important;
+}
+
+/* Email - warm gold */
+body .contact-icon-link.email-icon:hover{
+  background:linear-gradient(135deg,#f8d36f,#d9a85c) !important;
+  border-color:rgba(248,211,111,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(248,211,111,.18),
+    0 0 26px rgba(248,211,111,.14) !important;
+}
+
+/* Phone - violet + cyan */
+body .contact-icon-link.phone-icon:hover{
+  background:linear-gradient(135deg,#9b8cff,#38d9ff) !important;
+  border-color:rgba(155,140,255,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(155,140,255,.20),
+    0 0 26px rgba(56,217,255,.12) !important;
+}
+
+/* LinkedIn - cyan + violet */
+body .contact-icon-link.linkedin-icon:hover{
+  background:linear-gradient(135deg,#38d9ff,#8b7cf6) !important;
+  border-color:rgba(56,217,255,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(56,217,255,.20),
+    0 0 26px rgba(139,124,246,.14) !important;
+}
+
+/* GitHub - silver */
+body .contact-icon-link.github-icon:hover{
+  background:linear-gradient(135deg,#e5e7eb,#94a3b8) !important;
+  border-color:rgba(229,231,235,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(203,213,225,.18),
+    0 0 26px rgba(203,213,225,.12) !important;
+}
+
+/* Light mode */
+body.light .contact-icon-link{
+  color:#536174 !important;
+  background:rgba(255,255,255,.70) !important;
+  border-color:rgba(23,32,51,.14) !important;
+  box-shadow:0 14px 42px rgba(23,32,51,.08) !important;
+}
+
+body.light .contact-icon-link:hover{
+  color:#101827 !important;
+  border-color:rgba(23,32,51,.18) !important;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  body .contact-icons{
+    gap:14px !important;
+    margin-top:24px !important;
+  }
+
+  body .contact-icon-link{
+    width:50px !important;
+    height:50px !important;
+  }
+
+  body .contact-icon-link svg{
+    width:21px !important;
+    height:21px !important;
+  }
+}
+/* ======================================================
+   CONTACT ICON HOVER COLOR MATCH FIX
+   1st and last icon use same gradient family as 2nd and 3rd
+   ====================================================== */
+
+/* 1st Email icon = same as Phone hover */
+body .contact-icon-link.email-icon:hover{
+  background:linear-gradient(135deg,#9b8cff,#38d9ff) !important;
+  border-color:rgba(155,140,255,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(155,140,255,.20),
+    0 0 26px rgba(56,217,255,.12) !important;
+  color:#061018 !important;
+}
+
+/* Last GitHub icon = same as LinkedIn hover */
+body .contact-icon-link.github-icon:hover{
+  background:linear-gradient(135deg,#38d9ff,#8b7cf6) !important;
+  border-color:rgba(56,217,255,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(56,217,255,.20),
+    0 0 26px rgba(139,124,246,.14) !important;
+  color:#061018 !important;
+}

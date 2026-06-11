@@ -399,3 +399,27 @@ function initPitchModal() {
     if (event.key === "Escape") closeModal();
   });
 }
+/* ======================================================
+   Phone icon: mobile = call dialer, desktop = WhatsApp
+   ====================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const phoneLink = document.querySelector(".phone-icon");
+
+  if (!phoneLink) return;
+
+  phoneLink.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const phone = phoneLink.getAttribute("data-phone");
+    const whatsapp = phoneLink.getAttribute("data-whatsapp");
+
+    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      window.location.href = `tel:${phone}`;
+    } else {
+      window.open(whatsapp, "_blank", "noopener,noreferrer");
+    }
+  });
+});

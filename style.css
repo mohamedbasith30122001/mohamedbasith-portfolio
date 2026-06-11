@@ -3543,3 +3543,124 @@ body .contact-icon-link.github-icon:hover{
     0 0 26px rgba(139,124,246,.14) !important;
   color:#061018 !important;
 }
+/* ======================================================
+   FORCE FIX: CONTACT ICON SIZE
+   Prevent SVG icons from becoming huge on GitHub Pages
+   ====================================================== */
+
+#contact .contact-icons{
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:18px !important;
+  flex-wrap:wrap !important;
+  margin-top:28px !important;
+  margin-bottom:22px !important;
+}
+
+#contact .contact-icons .contact-icon-link{
+  width:56px !important;
+  height:56px !important;
+  min-width:56px !important;
+  max-width:56px !important;
+  min-height:56px !important;
+  max-height:56px !important;
+
+  padding:0 !important;
+  margin:0 !important;
+
+  display:inline-grid !important;
+  place-items:center !important;
+
+  border-radius:50% !important;
+  text-decoration:none !important;
+  overflow:hidden !important;
+  position:relative !important;
+
+  color:rgba(235,245,255,.78) !important;
+  background:rgba(255,255,255,.055) !important;
+  border:1px solid rgba(255,255,255,.14) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 14px 42px rgba(0,0,0,.28) !important;
+
+  flex:0 0 56px !important;
+  line-height:1 !important;
+}
+
+/* Most important fix */
+#contact .contact-icons .contact-icon-link svg{
+  width:22px !important;
+  height:22px !important;
+  min-width:22px !important;
+  max-width:22px !important;
+  min-height:22px !important;
+  max-height:22px !important;
+
+  display:block !important;
+  flex:none !important;
+  position:relative !important;
+  z-index:2 !important;
+}
+
+/* Common hover */
+#contact .contact-icons .contact-icon-link:hover{
+  transform:translateY(-7px) scale(1.12) !important;
+  color:#061018 !important;
+}
+
+/* Email + Phone same gradient */
+#contact .contact-icons .email-icon:hover,
+#contact .contact-icons .phone-icon:hover{
+  background:linear-gradient(135deg,#9b8cff,#38d9ff) !important;
+  border-color:rgba(155,140,255,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(155,140,255,.20),
+    0 0 26px rgba(56,217,255,.12) !important;
+}
+
+/* LinkedIn + GitHub same gradient */
+#contact .contact-icons .linkedin-icon:hover,
+#contact .contact-icons .github-icon:hover{
+  background:linear-gradient(135deg,#38d9ff,#8b7cf6) !important;
+  border-color:rgba(56,217,255,.45) !important;
+  box-shadow:
+    0 22px 60px rgba(56,217,255,.20),
+    0 0 26px rgba(139,124,246,.14) !important;
+}
+
+/* Light mode */
+body.light #contact .contact-icons .contact-icon-link{
+  color:#536174 !important;
+  background:rgba(255,255,255,.70) !important;
+  border-color:rgba(23,32,51,.14) !important;
+  box-shadow:0 14px 42px rgba(23,32,51,.08) !important;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  #contact .contact-icons{
+    gap:14px !important;
+    margin-top:22px !important;
+  }
+
+  #contact .contact-icons .contact-icon-link{
+    width:50px !important;
+    height:50px !important;
+    min-width:50px !important;
+    max-width:50px !important;
+    min-height:50px !important;
+    max-height:50px !important;
+    flex:0 0 50px !important;
+  }
+
+  #contact .contact-icons .contact-icon-link svg{
+    width:21px !important;
+    height:21px !important;
+    min-width:21px !important;
+    max-width:21px !important;
+    min-height:21px !important;
+    max-height:21px !important;
+  }
+}

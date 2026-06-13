@@ -423,3 +423,167 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+/* ======================================================
+   Project Image Lightbox
+   Applies to #work and #ai-projects images
+   ====================================================== */
+
+function initProjectImageLightbox(){
+  const modal = document.getElementById("imageLightbox");
+  const modalImage = document.getElementById("lightboxImage");
+  const modalTitle = document.getElementById("lightboxTitle");
+  const modalCount = document.getElementById("lightboxCount");
+  const modalThumbs = document.getElementById("lightboxThumbs");
+  const closeBtn = document.getElementById("lightboxClose");
+  const prevBtn = document.getElementById("lightboxPrev");
+  const nextBtn = document.getElementById("lightboxNext");
+
+  if (!modal || !modalImage || !modalTitle || !modalCount || !modalThumbs) return;
+
+  let images = [];
+  let currentIndex = 0;
+  let currentTitle = "Project Images";
+
+  const getImageSrc = (img) => img.getAttribute("src") || img.currentSrc || img.src;
+
+  const getCardImages = (clickedImg) => {
+    const card = clickedImg.closest(".project-slide, .ai-grid-card, .ai-project-card, article");
+
+    if (!card) {
+      return [{
+        src: getImageSrc(clickedImg),
+        alt: clickedImg.getAttribute("alt") || "Project image"
+      }];
+    }
+
+    const cardImages = Array.from(card.querySelectorAll("img"));
+    const seen = new Set();
+
+    return cardImages
+      .map((img) => ({
+        src: getImageSrc(img),
+        alt: img.getAttribute("alt") || "Project image"
+      }))
+      .filter((item) => {
+        if (!item.src || seen.has(item.src)) return false;
+        seen.add(item.src);
+        return true;
+      });
+  };
+
+  const getCardTitle = (clickedImg) => {
+    const card = clickedImg.closest(".project-slide, .ai-grid-card, .ai-project-card, article");
+    if (!card) return "Project Images";
+
+    return (
+      card.getAttribute("data-title") ||
+      card.querySelector("h3")?.textContent?.trim() ||
+      "Project Images"
+    );
+  };
+
+  const openLightbox = (clickedImg) => {
+    images = getCardImages(clickedImg);
+    currentTitle = getCardTitle(clickedImg);
+
+    const clickedSrc = getImageSrc(clickedImg);
+    currentIndex = images.findIndex((item) => item.src === clickedSrc);
+
+    if (currentIndex < 0) currentIndex = 0;
+
+    modal.classList.add("show");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    renderLightbox();
+  };
+
+  const closeLightbox = () => {
+    modal.classList.remove("show");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    modalImage.classList.remove("zoomed");
+  };
+
+  const renderLightbox = () => {
+    if (!images.length) return;
+
+    const item = images[currentIndex];
+
+    modalImage.src = item.src;
+    modalImage.alt = item.alt;
+    modalImage.classList.remove("zoomed");
+
+    modalTitle.textContent = currentTitle;
+    modalCount.textContent = `${currentIndex + 1} / ${images.length}`;
+
+    modalThumbs.innerHTML = "";
+
+    images.forEach((imgItem, index) => {
+      const btn = document.createElement("button");
+      btn.className = `lightbox-thumb ${index === currentIndex ? "active" : ""}`;
+      btn.type = "button";
+      btn.setAttribute("aria-label", `Open image ${index + 1}`);
+
+      btn.innerHTML = `<img src="${imgItem.src}" alt="${imgItem.alt}">`;
+
+      btn.addEventListener("click", () => {
+        currentIndex = index;
+        renderLightbox();
+      });
+
+      modalThumbs.appendChild(btn);
+    });
+
+    const activeThumb = modalThumbs.querySelector(".lightbox-thumb.active");
+    if (activeThumb) {
+      activeThumb.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest"
+      });
+    }
+  };
+
+  const showNext = () => {
+    if (!images.length) return;
+    currentIndex = (currentIndex + 1) % images.length;
+    renderLightbox();
+  };
+
+  const showPrev = () => {
+    if (!images.length) return;
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    renderLightbox();
+  };
+
+  document.querySelectorAll("#work img, #ai-projects img").forEach((img) => {
+    img.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openLightbox(img);
+    });
+  });
+
+  closeBtn?.addEventListener("click", closeLightbox);
+  nextBtn?.addEventListener("click", showNext);
+  prevBtn?.addEventListener("click", showPrev);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeLightbox();
+  });
+
+  modalImage.addEventListener("click", () => {
+    modalImage.classList.toggle("zoomed");
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!modal.classList.contains("show")) return;
+
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") showNext();
+    if (e.key === "ArrowLeft") showPrev();
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initProjectImageLightbox);

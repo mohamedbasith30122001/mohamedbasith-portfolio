@@ -3664,3 +3664,632 @@ body.light #contact .contact-icons .contact-icon-link{
     max-height:21px !important;
   }
 }
+/* ======================================================
+   PROJECT IMAGE LIGHTBOX
+   Works for Zoho Projects + AI Projects images
+   ====================================================== */
+
+/* Make project images feel clickable */
+#work img,
+#ai-projects img{
+  cursor:zoom-in !important;
+}
+
+#work .project-visual img,
+#ai-projects .project-visual img,
+#work .screenshot-strip img,
+#ai-projects .screenshot-strip img{
+  transition:transform .25s ease, filter .25s ease, opacity .25s ease !important;
+}
+
+#work .project-visual img:hover,
+#ai-projects .project-visual img:hover,
+#work .screenshot-strip img:hover,
+#ai-projects .screenshot-strip img:hover{
+  transform:scale(1.035) !important;
+  filter:brightness(1.08) contrast(1.05) !important;
+}
+
+/* Modal background */
+.image-lightbox{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:999999 !important;
+  display:none !important;
+  place-items:center !important;
+  padding:24px !important;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56,217,255,.12), transparent 34%),
+    radial-gradient(circle at 80% 30%, rgba(139,124,246,.12), transparent 36%),
+    rgba(3,8,14,.86) !important;
+
+  backdrop-filter:blur(18px) !important;
+}
+
+.image-lightbox.show{
+  display:grid !important;
+}
+
+/* Modal panel */
+.lightbox-panel{
+  width:min(94vw,1120px) !important;
+  height:min(88vh,760px) !important;
+  position:relative !important;
+  display:grid !important;
+  grid-template-rows:1fr auto !important;
+  gap:16px !important;
+
+  padding:22px !important;
+  border-radius:30px !important;
+  overflow:hidden !important;
+
+  background:rgba(15,23,42,.78) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+
+  box-shadow:
+    0 35px 120px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+
+/* Image viewing area */
+.lightbox-view{
+  width:100% !important;
+  min-height:0 !important;
+  display:grid !important;
+  place-items:center !important;
+  overflow:auto !important;
+  border-radius:22px !important;
+
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.02)) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+}
+
+#lightboxImage{
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  border-radius:16px !important;
+  cursor:zoom-in !important;
+  transition:transform .25s ease !important;
+}
+
+/* Click main image to zoom */
+#lightboxImage.zoomed{
+  max-width:none !important;
+  max-height:none !important;
+  width:135% !important;
+  cursor:zoom-out !important;
+}
+
+/* Close button */
+.lightbox-close{
+  position:absolute !important;
+  top:18px !important;
+  right:18px !important;
+  width:42px !important;
+  height:42px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  background:rgba(255,255,255,.08) !important;
+  color:#fff !important;
+  font-size:30px !important;
+  line-height:1 !important;
+  cursor:pointer !important;
+  z-index:5 !important;
+  transition:transform .25s ease, background .25s ease !important;
+}
+
+.lightbox-close:hover{
+  transform:scale(1.1) rotate(90deg) !important;
+  background:linear-gradient(135deg,#38d9ff,#8b7cf6) !important;
+  color:#061018 !important;
+}
+
+/* Next / Previous buttons */
+.lightbox-nav{
+  position:absolute !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:48px !important;
+  height:72px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  background:rgba(255,255,255,.08) !important;
+  color:#fff !important;
+  font-size:46px !important;
+  line-height:1 !important;
+  cursor:pointer !important;
+  z-index:5 !important;
+  transition:transform .25s ease, background .25s ease, color .25s ease !important;
+}
+
+.lightbox-prev{
+  left:18px !important;
+}
+
+.lightbox-next{
+  right:18px !important;
+}
+
+.lightbox-nav:hover{
+  background:linear-gradient(135deg,#9b8cff,#38d9ff) !important;
+  color:#061018 !important;
+}
+
+.lightbox-prev:hover{
+  transform:translateY(-50%) translateX(-4px) scale(1.04) !important;
+}
+
+.lightbox-next:hover{
+  transform:translateY(-50%) translateX(4px) scale(1.04) !important;
+}
+
+/* Bottom title + thumbnail strip */
+.lightbox-bottom{
+  display:grid !important;
+  grid-template-columns:minmax(160px,260px) 1fr !important;
+  gap:18px !important;
+  align-items:center !important;
+}
+
+.lightbox-bottom p{
+  margin:0 0 4px !important;
+  color:#fff !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+}
+
+.lightbox-bottom span{
+  color:rgba(235,245,255,.60) !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+}
+
+/* Side scroll thumbnails */
+.lightbox-thumbs{
+  display:flex !important;
+  gap:10px !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  padding:4px 2px 8px !important;
+  scroll-behavior:smooth !important;
+}
+
+.lightbox-thumbs::-webkit-scrollbar{
+  height:7px !important;
+}
+
+.lightbox-thumbs::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.08) !important;
+  border-radius:999px !important;
+}
+
+.lightbox-thumbs::-webkit-scrollbar-thumb{
+  background:linear-gradient(90deg,#38d9ff,#8b7cf6) !important;
+  border-radius:999px !important;
+}
+
+.lightbox-thumb{
+  width:86px !important;
+  height:56px !important;
+  flex:0 0 86px !important;
+  border-radius:12px !important;
+  overflow:hidden !important;
+  border:2px solid transparent !important;
+  background:rgba(255,255,255,.08) !important;
+  padding:0 !important;
+  cursor:pointer !important;
+  opacity:.62 !important;
+  transition:opacity .25s ease, transform .25s ease, border-color .25s ease !important;
+}
+
+.lightbox-thumb img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+}
+
+.lightbox-thumb:hover,
+.lightbox-thumb.active{
+  opacity:1 !important;
+  transform:translateY(-2px) !important;
+  border-color:#38d9ff !important;
+}
+
+/* Light mode */
+body.light .image-lightbox{
+  background:
+    radial-gradient(circle at 20% 20%, rgba(47,127,150,.14), transparent 34%),
+    radial-gradient(circle at 80% 30%, rgba(107,136,168,.14), transparent 36%),
+    rgba(238,242,246,.82) !important;
+}
+
+body.light .lightbox-panel{
+  background:rgba(255,255,255,.86) !important;
+  border-color:rgba(23,32,51,.14) !important;
+  box-shadow:0 35px 110px rgba(23,32,51,.18) !important;
+}
+
+body.light .lightbox-view{
+  background:rgba(255,255,255,.64) !important;
+  border-color:rgba(23,32,51,.12) !important;
+}
+
+body.light .lightbox-bottom p{
+  color:#172033 !important;
+}
+
+body.light .lightbox-bottom span{
+  color:#536174 !important;
+}
+
+body.light .lightbox-close,
+body.light .lightbox-nav{
+  background:rgba(255,255,255,.74) !important;
+  color:#172033 !important;
+  border-color:rgba(23,32,51,.14) !important;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  .image-lightbox{
+    padding:12px !important;
+  }
+
+  .lightbox-panel{
+    width:96vw !important;
+    height:86vh !important;
+    padding:14px !important;
+    border-radius:22px !important;
+  }
+
+  .lightbox-bottom{
+    grid-template-columns:1fr !important;
+    gap:10px !important;
+  }
+
+  .lightbox-nav{
+    width:40px !important;
+    height:58px !important;
+    font-size:36px !important;
+  }
+
+  .lightbox-prev{
+    left:10px !important;
+  }
+
+  .lightbox-next{
+    right:10px !important;
+  }
+
+  .lightbox-close{
+    top:10px !important;
+    right:10px !important;
+  }
+
+  .lightbox-thumb{
+    width:72px !important;
+    height:48px !important;
+    flex-basis:72px !important;
+  }
+}
+/* ======================================================
+   PROJECT IMAGE LIGHTBOX
+   Works for Zoho Projects + AI Projects images
+   ====================================================== */
+
+/* Make project images feel clickable */
+#work img,
+#ai-projects img{
+  cursor:zoom-in !important;
+}
+
+#work .project-visual img,
+#ai-projects .project-visual img,
+#work .screenshot-strip img,
+#ai-projects .screenshot-strip img{
+  transition:transform .25s ease, filter .25s ease, opacity .25s ease !important;
+}
+
+#work .project-visual img:hover,
+#ai-projects .project-visual img:hover,
+#work .screenshot-strip img:hover,
+#ai-projects .screenshot-strip img:hover{
+  transform:scale(1.035) !important;
+  filter:brightness(1.08) contrast(1.05) !important;
+}
+
+/* Modal background */
+.image-lightbox{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:999999 !important;
+  display:none !important;
+  place-items:center !important;
+  padding:24px !important;
+
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56,217,255,.12), transparent 34%),
+    radial-gradient(circle at 80% 30%, rgba(139,124,246,.12), transparent 36%),
+    rgba(3,8,14,.86) !important;
+
+  backdrop-filter:blur(18px) !important;
+}
+
+.image-lightbox.show{
+  display:grid !important;
+}
+
+/* Modal panel */
+.lightbox-panel{
+  width:min(94vw,1120px) !important;
+  height:min(88vh,760px) !important;
+  position:relative !important;
+  display:grid !important;
+  grid-template-rows:1fr auto !important;
+  gap:16px !important;
+
+  padding:22px !important;
+  border-radius:30px !important;
+  overflow:hidden !important;
+
+  background:rgba(15,23,42,.78) !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+
+  box-shadow:
+    0 35px 120px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+
+/* Image viewing area */
+.lightbox-view{
+  width:100% !important;
+  min-height:0 !important;
+  display:grid !important;
+  place-items:center !important;
+  overflow:auto !important;
+  border-radius:22px !important;
+
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.02)) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+}
+
+#lightboxImage{
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  border-radius:16px !important;
+  cursor:zoom-in !important;
+  transition:transform .25s ease !important;
+}
+
+/* Click main image to zoom */
+#lightboxImage.zoomed{
+  max-width:none !important;
+  max-height:none !important;
+  width:135% !important;
+  cursor:zoom-out !important;
+}
+
+/* Close button */
+.lightbox-close{
+  position:absolute !important;
+  top:18px !important;
+  right:18px !important;
+  width:42px !important;
+  height:42px !important;
+  border-radius:50% !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  background:rgba(255,255,255,.08) !important;
+  color:#fff !important;
+  font-size:30px !important;
+  line-height:1 !important;
+  cursor:pointer !important;
+  z-index:5 !important;
+  transition:transform .25s ease, background .25s ease !important;
+}
+
+.lightbox-close:hover{
+  transform:scale(1.1) rotate(90deg) !important;
+  background:linear-gradient(135deg,#38d9ff,#8b7cf6) !important;
+  color:#061018 !important;
+}
+
+/* Next / Previous buttons */
+.lightbox-nav{
+  position:absolute !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:48px !important;
+  height:72px !important;
+  border-radius:999px !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  background:rgba(255,255,255,.08) !important;
+  color:#fff !important;
+  font-size:46px !important;
+  line-height:1 !important;
+  cursor:pointer !important;
+  z-index:5 !important;
+  transition:transform .25s ease, background .25s ease, color .25s ease !important;
+}
+
+.lightbox-prev{
+  left:18px !important;
+}
+
+.lightbox-next{
+  right:18px !important;
+}
+
+.lightbox-nav:hover{
+  background:linear-gradient(135deg,#9b8cff,#38d9ff) !important;
+  color:#061018 !important;
+}
+
+.lightbox-prev:hover{
+  transform:translateY(-50%) translateX(-4px) scale(1.04) !important;
+}
+
+.lightbox-next:hover{
+  transform:translateY(-50%) translateX(4px) scale(1.04) !important;
+}
+
+/* Bottom title + thumbnail strip */
+.lightbox-bottom{
+  display:grid !important;
+  grid-template-columns:minmax(160px,260px) 1fr !important;
+  gap:18px !important;
+  align-items:center !important;
+}
+
+.lightbox-bottom p{
+  margin:0 0 4px !important;
+  color:#fff !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+}
+
+.lightbox-bottom span{
+  color:rgba(235,245,255,.60) !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+}
+
+/* Side scroll thumbnails */
+.lightbox-thumbs{
+  display:flex !important;
+  gap:10px !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  padding:4px 2px 8px !important;
+  scroll-behavior:smooth !important;
+}
+
+.lightbox-thumbs::-webkit-scrollbar{
+  height:7px !important;
+}
+
+.lightbox-thumbs::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.08) !important;
+  border-radius:999px !important;
+}
+
+.lightbox-thumbs::-webkit-scrollbar-thumb{
+  background:linear-gradient(90deg,#38d9ff,#8b7cf6) !important;
+  border-radius:999px !important;
+}
+
+.lightbox-thumb{
+  width:86px !important;
+  height:56px !important;
+  flex:0 0 86px !important;
+  border-radius:12px !important;
+  overflow:hidden !important;
+  border:2px solid transparent !important;
+  background:rgba(255,255,255,.08) !important;
+  padding:0 !important;
+  cursor:pointer !important;
+  opacity:.62 !important;
+  transition:opacity .25s ease, transform .25s ease, border-color .25s ease !important;
+}
+
+.lightbox-thumb img{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  display:block !important;
+}
+
+.lightbox-thumb:hover,
+.lightbox-thumb.active{
+  opacity:1 !important;
+  transform:translateY(-2px) !important;
+  border-color:#38d9ff !important;
+}
+/* ======================================================
+   EXACT ZOHO PRODUCT LOGO BADGES
+   Put product logos on every Work project card
+   ====================================================== */
+
+#work .project-slide{
+  position:relative !important;
+  overflow:hidden !important;
+}
+
+#work .product-logo-cluster{
+  position:absolute !important;
+  top:22px !important;
+  right:22px !important;
+  z-index:10 !important;
+
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+}
+
+#work .product-logo-badge{
+  width:42px !important;
+  height:42px !important;
+  border-radius:14px !important;
+
+  display:grid !important;
+  place-items:center !important;
+
+  background:rgba(255,255,255,.88) !important;
+  border:1px solid rgba(255,255,255,.28) !important;
+
+  box-shadow:
+    0 14px 38px rgba(0,0,0,.26),
+    inset 0 1px 0 rgba(255,255,255,.55) !important;
+
+  overflow:hidden !important;
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease !important;
+}
+
+#work .product-logo-badge img{
+  width:28px !important;
+  height:28px !important;
+  object-fit:contain !important;
+  display:block !important;
+}
+
+#work .project-slide:hover .product-logo-badge{
+  transform:translateY(-4px) scale(1.06) !important;
+  box-shadow:
+    0 18px 48px rgba(56,217,255,.16),
+    inset 0 1px 0 rgba(255,255,255,.65) !important;
+}
+
+/* Light mode */
+body.light #work .product-logo-badge{
+  background:rgba(255,255,255,.78) !important;
+  border-color:rgba(23,32,51,.12) !important;
+  box-shadow:0 14px 34px rgba(23,32,51,.10) !important;
+}
+
+/* Mobile */
+@media(max-width:700px){
+  #work .product-logo-cluster{
+    top:18px !important;
+    right:18px !important;
+    gap:6px !important;
+  }
+
+  #work .product-logo-badge{
+    width:36px !important;
+    height:36px !important;
+    border-radius:12px !important;
+  }
+
+  #work .product-logo-badge img{
+    width:24px !important;
+    height:24px !important;
+  }
+}
